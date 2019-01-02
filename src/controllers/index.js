@@ -1,8 +1,8 @@
-const testRoutes = require('./test/test.routes');
 const authRoutes = require('./auth/auth.routes');
+const userRoutes = require('./user/user.routes');
 require('../services/passport');
 
 module.exports = app => {
-  app.use('/test', testRoutes);
   app.use('/auth', authRoutes);
+  app.use('/user', userRoutes);
 };

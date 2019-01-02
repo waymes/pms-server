@@ -1,4 +1,5 @@
 const jwt = require('jwt-simple');
+const boom = require('boom');
 const User = require('../../models/User');
 const config = require('../../config');
 
@@ -13,12 +14,24 @@ exports.signup = (req, res, next) => {
   const user = new User({ email, password, firstName, lastName });
 
   user.save(err => {
-    if (err) return next(err);
+    if (err) return next(boom.badImplementation(null, err));
 
     return res.status(201).json({ token: tokenForUser(user) });
   });
 };
 
-exports.signin = (req, res) => {
-  res.status(200).send({ token: tokenForUser(req.user) });
+exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email }, (err, user) => {
+    if (err) return next(boom.badImplementation(null, err));
+    if (!user) return next(boom.notFound('User not found'));
+
+    user.comparePassword(password, (err, isMatch) => {
+      if (err) return next(boom.badImplementation(null, err));
+      if (!isMatch) return next(boom.notFound('Password is incorrect'));
+
+      return res.status(200).send({ token: tokenForUser(user) });
+    });
+  });
 };

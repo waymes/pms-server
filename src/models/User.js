@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 // schema ===================================================
 const userSchema = new Schema({
+  // id: new mongoose.mongo.ObjectID(),
   firstName: {
     type: String,
     required: [true, 'You must provide a first name']
