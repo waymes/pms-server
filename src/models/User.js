@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 // schema ===================================================
 const userSchema = new Schema({
-  // id: new mongoose.mongo.ObjectID(),
   firstName: {
     type: String,
     required: [true, 'You must provide a first name']
@@ -22,7 +21,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: [true, 'You must provide a password']
-  }
+  },
+  people: [{ type: Schema.Types.ObjectId, ref: 'person' }]
 });
 
 // pre save hook ============================================
