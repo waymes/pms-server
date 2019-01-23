@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.post('/', requireAuth, controller.create);
 router.get('/my', requireAuth, controller.listMyPeople);
-router.get('/:id', requireAuth, controller.get);
+router.get('/:personId', requireAuth, controller.get);
+router.put('/:personId', requireAuth, controller.update);
+router.delete('/:personId', requireAuth, controller.delete);
 
 module.exports = router;
