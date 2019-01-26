@@ -36,7 +36,7 @@ exports.update = (req, res, next) => {
     if (err) return next(boom.badImplementation(null, err));
     if (!person) return next(boom.notFound('Person not found'));
 
-    return res.status(200).send(person);
+    return res.sendStatus(204);
   });
 };
 
