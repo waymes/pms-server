@@ -27,7 +27,7 @@ const userSchema = new Schema({
   city: String,
   password: {
     type: String,
-    minlength: 5,
+    minlength: lengthValidator('email', 5, true),
     maxlength: lengthValidator('password', 62),
     required: [true, 'You must provide a password']
   },

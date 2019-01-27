@@ -1,4 +1,4 @@
-exports.lengthValidator = (field, length) => {
+exports.lengthValidator = (field, length, isMin) => {
   const capitalizedField = `${field.charAt(0).toUpperCase()}${field.slice(1)}`;
-  return [length, `${capitalizedField} max length is ${length}`];
+  return [length, `${capitalizedField} ${isMin ? 'min' : 'max'} length is ${length}`];
 };
