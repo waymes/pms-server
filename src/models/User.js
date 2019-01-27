@@ -1,25 +1,34 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
+const validator = require('validator');
+const { lengthValidator } = require('../helpers/validators');
 const Schema = mongoose.Schema;
 
 // schema ===================================================
 const userSchema = new Schema({
   firstName: {
     type: String,
-    required: [true, 'You must provide a first name']
+    required: [true, 'You must provide a first name'],
+    maxlength: lengthValidator('firstName', 25)
   },
   lastName: {
     type: String,
-    required: [true, 'You must provide a last name']
+    required: [true, 'You must provide a last name'],
+    maxlength: lengthValidator('lastName', 25)
   },
   email: {
     type: String,
     unique: [true, 'Email has to be unique'],
     lowercase: true,
+    validate: [validator.isEmail, 'Invalid Email'],
+    maxlength: lengthValidator('email', 62),
     required: [true, 'You must provide an email']
   },
+  city: String,
   password: {
     type: String,
+    minlength: 5,
+    maxlength: lengthValidator('password', 62),
     required: [true, 'You must provide a password']
   },
   people: [{ type: Schema.Types.ObjectId, ref: 'person' }]

@@ -17,8 +17,9 @@ exports.get = (req, res, next) => {
 };
 
 exports.create = (req, res, next) => {
-  const { firstName, lastName } = req.body;
-  const person = new Person({ firstName, lastName, createdBy: req.user._id });
+  const { firstName, lastName, email, city, relation } = req.body;
+  const personFields = { firstName, lastName, email, city, relation };
+  const person = new Person({ ...personFields, createdBy: req.user._id });
 
   person.save(err => {
     if (err) return next(boom.badImplementation(null, err));
@@ -28,11 +29,12 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  const { firstName, lastName } = req.body;
+  const { firstName, lastName, email, city, relation } = req.body;
 
   const where = { _id: req.params.personId };
-  const updatedFields = { firstName, lastName };
-  Person.findOneAndUpdate(where, updatedFields, { new: true }, (err, person) => {
+  const personFields = { firstName, lastName, email, city, relation };
+  const options = { runValidators: true };
+  Person.findOneAndUpdate(where, personFields, options, (err, person) => {
     if (err) return next(boom.badImplementation(null, err));
     if (!person) return next(boom.notFound('Person not found'));
 

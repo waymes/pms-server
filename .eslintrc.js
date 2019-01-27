@@ -6,7 +6,10 @@ module.exports = {
   },
   extends: "eslint:recommended",
   parserOptions: {
-    ecmaVersion: 6
+    ecmaVersion: 6,
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true
+    }
   },
   rules: {
     indent: ["error", 2],
